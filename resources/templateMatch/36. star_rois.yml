@@ -1,0 +1,23 @@
+%YAML:1.0
+---
+rects:
+   -
+      x: 399
+      y: 2319
+      width: 77
+      height: 69
+   -
+      x: 499
+      y: 1971
+      width: 61
+      height: 69
+   -
+      x: 1193
+      y: 507
+      width: 85
+      height: 85
+   -
+      x: 1973
+      y: 2639
+      width: 71
+      height: 75
