@@ -19,26 +19,26 @@ Modifications can be made to different parts of the program. The program consist
 
 ### Text detection
 
-[TextDetection class](TextDetection.h)
+[TextDetection class](include/text_detection/TextDetection.h)
 
 While text detection is implemented, the program treats text as noise and detection is used only for noise removal. Detection is performed using the `EAST` implementation of OpenCV's `TextDetection` model, with the pre-trained  `frozen_east_text_detection.pb` data included in the repository. Note that the models expects image dimensions to be in multiples of 32. To change the model data used for detection, modify the `modelPath` variable in the `TextDetection::detectTextWithEAST()` method. The following parameters for the model can also be modified here: confidence and Non-Maximum Suppression thresholds, input image scaling factor and input image size.
 
 ### Segmentation
 
-[Segmentation class](Segment.h)
+[Segmentation class](include/segment/Segment.h)
 
 All preprocessing and segmentation is done here. The `segment()` method is separated as follows: thresholding -> preprocessing -> arrow identification -> isolation of quadrilaterals (UML classes) ->
 isolation of relationship lines. As these steps are separated into different methods, changes can be made to individual methods. However, each step relies on the processed image of the previous step. The output of the segmentation is the contours of the quadrilaterals (classes), arrow tip- and shaft-endpoints, and contours of the lines representing association relationships.
 
 ### Classification
 
-[Classification class](Classify.h)
+[Classification class](include/classify/Classsify.h)
 
 The classification process takes the output of the segmentation step and creates tuples representing UML relationships: two classes and the relationship. The two classified relationships are association and inheritance. Custom comparators are used to compare the tuples. The classification is based on the location of elements to other elements, and the thresholds for accepted range can be modified. Note that `typedef`s are used for the sets containing the tuples.
 
 ### Transformation
 
-[Transformation class](Transform.h)
+[Transformation class](include/transform/Transform.h)
 
 The two sets (association-relationships and inheritance-relationships) are used to create the PlantUML syntax output, which is printed to the console. Short hashes are created for each of the classes to distinguish different classes. This can be removed if text recognition is implemented and used instead. The PlantUML syntax for the different relationships is as follows:
 
@@ -56,6 +56,6 @@ Class_3 <|-- Class_4
 
 ### Utility
 
-[Utility class](Util.h)
+[Utility class](include/util/Util.h)
 
 This class contains a collection of methods that are generalised helper methods for file management, drawing functions for visualisation, and calculations on `cv::Point`s. The method for template matching is also contained here solely to simplify the main entry-point file.
