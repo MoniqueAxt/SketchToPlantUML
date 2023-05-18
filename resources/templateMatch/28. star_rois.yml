@@ -1,0 +1,13 @@
+%YAML:1.0
+---
+rects:
+   -
+      x: 34
+      y: 303
+      width: 54
+      height: 46
+   -
+      x: 337
+      y: 270
+      width: 47
+      height: 40
