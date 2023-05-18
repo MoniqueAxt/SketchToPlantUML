@@ -1,4 +1,4 @@
-﻿#include <windows.h>
+#include <windows.h>
 #include <iostream>
 #include <string>
 
@@ -45,26 +45,17 @@ int main()
 	// #####################################################################
 	std::cout << std::endl;
 
-	constexpr int START = 36;
-	constexpr int END = 70;
-
 	// Iterate through each image
-	for (int i = START; i <= END; i++) {
-
-		// Read img
-		std::string imgpath = "resources/dataset/" + std::to_string(i) + ".jpg";
-		Mat src = imread(imgpath);
+	for (auto i = 0; i < inputImages.size(); i++)
+	{
+		Mat src = inputImages[i];
 
 		if (src.empty()) {
-			// try different ext
-			imgpath = "resources/dataset/" + std::to_string(i) + ".bmp";
-			src = imread(imgpath);
-
-			if (src.empty()) {
-				std::cerr << "Error loading image " << std::endl;
-				continue;
-			}
+			std::cerr << "Error loading image " << std::endl;
+			continue;
 		}
+
+		
 		std::cout << "Image " + std::to_string(i) << std::endl;
 
 		// #####################################################################
