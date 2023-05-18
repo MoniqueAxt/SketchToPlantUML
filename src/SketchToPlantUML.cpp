@@ -54,8 +54,6 @@ int main()
 			std::cerr << "Error loading image " << std::endl;
 			continue;
 		}
-
-		
 		std::cout << "Image " + std::to_string(i) << std::endl;
 
 		// #####################################################################
