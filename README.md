@@ -12,8 +12,7 @@ The project is built using CMake GUI and OpenCV. OpenCV *source* files can be do
 
 ## How to use
 The program can be run as-is from the main entry point located in `SketchToPlantUML.cpp`.
-
-Images are stored in the `resouces` directory: input images are in the sub-directory `/dataset` and template images for template matching are stored in sub-directories `/arrow_templates` and `/star_templates`. These file paths can be modified in `SketchToPlantUML.cpp`. Note that if any of the directory or file names are changed, the `CMakeLists.txt` file should be modified accordingly.
+Images are stored in the `resouces` directory: input images are in the sub-directory `/dataset` and template images for template matching are stored in sub-directories `/arrow_templates` and `/star_templates`. The original image dataset can be found [here](https://www.kaggle.com/datasets/eb72f3b6dfddec0fdf05a6e2f46116cce40e5d0d5e15f0532389d24d9f09fb70=). The image file paths can be modified in `SketchToPlantUML.cpp`. Note that if any of the directory or file names are changed, the `CMakeLists.txt` file should be modified accordingly.
 
 Modifications can be made to different parts of the program. The program consists of four steps: text detection, segmentation, classification and transformation; the directory structure is separated based on these steps, as well as a Utility directory, all located in the `src` and `ìnclude` directories. The entry point file calls each of these steps in order.
 
