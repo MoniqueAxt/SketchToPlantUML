@@ -29,14 +29,14 @@ std::vector<std::vector<Point>> TextDetection::detectTextWithEAST(Mat& orig, con
 
 	// Set the parameters
 	TextDetectionModel_EAST model(modelPath);
-	float confThreshold = 0.1f;              // reject detections below the confidence threshold
-	float nmsThreshold = 0.1f;               // Non-Max Suppression (NMS) - reduce overlapping bounding boxes
+	float confThreshold = 0.1f;              			// reject detections below the confidence threshold
+	float nmsThreshold = 0.1f;               			// Non-Max Suppression (NMS) - reduce overlapping bounding boxes
 	model.setConfidenceThreshold(confThreshold)
 		.setNMSThreshold(nmsThreshold);
 
-	double detScale = 1.0;					// scaling factor that applied to the input image 
+	double detScale = 1.0;						// scaling factor that applied to the input image 
 	Size detInputSize = Size(img.size().width, img.size().height);	// size of the input image
-	Scalar detMean = Scalar(123.68, 116.78, 103.94);				// subtract the mean value from image data
+	Scalar detMean = Scalar(123.68, 116.78, 103.94);		// subtract the mean value from image data
 	// Swap the Red and Blue channels of the input image
 	// (required since OpenCV uses BGR format and Tensorflow uses RGB format)
 	bool swapRB = true;
