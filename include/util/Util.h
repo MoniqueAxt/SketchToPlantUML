@@ -76,7 +76,7 @@ public:
 	/* Overload */
 	static std::vector<Point> getLooseEndPoints(Size size, const std::vector<Point>& contours);
 
-	/* Closes gaps by drawing a line between points that within a certain distance of each other */
+	/* Closes gaps by drawing a line between points that are within a certain distance of each other */
 	static Mat closeLooseEndGaps(const Mat& img, const std::vector<Point>& looseEndsList, int threshold = 50);
 
 private:
