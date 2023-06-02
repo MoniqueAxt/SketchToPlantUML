@@ -146,7 +146,7 @@ void Util::removeNoiseConnectedComp(Mat& img, const int threshold)
 	Mat labels, stats, centroids;
 
 	const int numComponents = connectedComponentsWithStats(img, labels, stats, centroids);
-	for (int i = 1; i < numComponents; i++) { // start from 1 to skip background component 
+	for (int i = 1; i < numComponents; i++) { 		// start from 1 to skip background component 
 		const int area = stats.at<int>(i, CC_STAT_AREA);
 		if (area < threshold) {				// threshold is the minimum component size to keep
 			// set all pixels in this component to 0
@@ -159,7 +159,7 @@ void Util::removeNoiseConnectedComp(Mat& img, const int threshold)
 Mat Util::convertGrayToColor(const Mat& src)
 {
 	Mat converted(src.size(), CV_8UC3);			// create 8-bit color img
-	cvtColor(src, converted, COLOR_GRAY2RGB);	// convert to color
+	cvtColor(src, converted, COLOR_GRAY2RGB);		// convert to color
 	return converted;
 }
 
@@ -174,10 +174,10 @@ Mat Util::fillBlackOutsideOfContours(const Mat& src, const std::vector<Point2f>&
 		pts.emplace_back(corner.x, corner.y);
 	}
 
-	Mat stencil = Mat::zeros(img.size(), img.type());	 // black stencil as a mask		
-	fillPoly(stencil, pts, Color::white); 		 		// draw the poly in white
+	Mat stencil = Mat::zeros(img.size(), img.type());	// black stencil as a mask		
+	fillPoly(stencil, pts, Color::white); 		 	// draw the poly in white
 	Mat result = Mat::zeros(img.size(), img.type()); 	// result img with black background
-	bitwise_and(img, stencil, result);	 				// bitwise to keep only the ROI
+	bitwise_and(img, stencil, result);	 		// bitwise to keep only the ROI
 
 	return result;
 }
@@ -299,12 +299,10 @@ void Util::drawRelationship(
 	rectangle(outputImg, boundingRect1, rectColor, FILLED);
 	rectangle(outputImg, boundingRect2, rectColor, FILLED);
 
-
 	// Draw the line/arrow connecting the rects
 	line(outputImg, connectingLine.first, connectingLine.second, rectColor, 3);
 	circle(outputImg, connectingLine.first, 7, pointColor, FILLED);
 	circle(outputImg, connectingLine.second, 7, pointColor, FILLED);
-
 
 	// Draw the class names on the rectangles
 	constexpr int thickness = 2;
@@ -321,8 +319,6 @@ void Util::drawRelationship(
 	center = Point(m.m10 / m.m00, m.m01 / m.m00);
 	textPos = Point(center.x - textSize.width / 2, center.y + textSize.height / 2);
 	putText(outputImg, rect2Name, textPos, FONT_HERSHEY_SIMPLEX, 1, Color::white, thickness);
-
-
 }
 
 Mat Util::drawWatershedMarkers(Mat markers, Mat output, const bool drawMarkers, const bool drawBackground, const int backgroundLabel)
@@ -342,11 +338,11 @@ Mat Util::drawWatershedMarkers(Mat markers, Mat output, const bool drawMarkers, 
 				output.at<Vec3b>(i, j) = Vec3b(128, 128, 128);	// Gray for unknown
 			}
 			else if (label == -1) {	// boundary
-				output.at<Vec3b>(i, j) = Vec3b(0, 255, 255); // Yellow for boundaries
+				output.at<Vec3b>(i, j) = Vec3b(0, 255, 255);	// Yellow for boundaries
 			}
 			// background
 			else if (label == backgroundLabel && drawBackground) {
-				output.at<Vec3b>(i, j) = Vec3b(0, 0, 0); // Black for background
+				output.at<Vec3b>(i, j) = Vec3b(0, 0, 0);	// Black for background
 
 			}
 			else if (drawMarkers) {	// Positive int labels >= 2
@@ -388,7 +384,7 @@ std::vector<Rect> Util::performTemplateMatch(const Mat& src, std::vector<Mat>& t
 
 	// Loop over templates and perform template matching
 	std::set<Rect, RectCompare> allDetections;	// vector to store all matching locations
-	std::vector<std::thread> threads;			// store all threads
+	std::vector<std::thread> threads;		// store all threads
 
 	// Loop over templates
 	for (auto& templateImg : templates) {
@@ -403,7 +399,7 @@ std::vector<Rect> Util::performTemplateMatch(const Mat& src, std::vector<Mat>& t
 		// Start a new thread
 		threads.emplace_back([&inputImage, &templateImg, &allDetections, &mutexAllDetections, thresholdValue]()
 			{
-				std::vector<Rect> detections;// vector to store all matching locations 
+				std::vector<Rect> detections;	// vector to store all matching locations 
 				// Perform template matching
 				Mat result;
 				matchTemplate(inputImage, templateImg, result, TM_CCOEFF_NORMED);
@@ -589,18 +585,18 @@ double Util::distance(const Point p1, const Point p2)
 bool Util::comparePointsX(const Point p1, const Point p2) {
 	// define a comparison function for Point objects
 	if (p1.x != p2.x) {
-		return p1.x < p2.x; // sort by x-coordinate
+		return p1.x < p2.x; 	// sort by x-coordinate
 	}
-	return p1.y < p2.y; // if x-coordinate is the same, sort by y-coordinate
+	return p1.y < p2.y; 		// if x-coordinate is the same, sort by y-coordinate
 }
 
 /* Compare points based on y-axis */
 bool Util::comparePointsY(const Point p1, const Point p2) {
 	// define a comparison function for Point objects
 	if (p1.y != p2.y) {
-		return p1.y < p2.y; // sort by y-coordinate
+		return p1.y < p2.y;	// sort by y-coordinate
 	}
-	return p1.x < p2.x; // if y-coordinate is the same, sort by x-coordinate
+	return p1.x < p2.x;		// if y-coordinate is the same, sort by x-coordinate
 }
 
 /* Closes gaps by drawing a line between points that are closest to each other */
@@ -608,7 +604,7 @@ Mat Util::closeLooseEndGaps(const Mat& img, const std::vector<Point>& looseEndsL
 {
 	// Close gaps
 	Mat finalImg = img.clone();
-	//std::vector<std::pair<Point, Point>> lines; 
+	//std::vector<std::pair<Point, Point>> lines; 	// store the lines
 
 	// iterate every point in the list and draw a line between nearest point
 	for (size_t i = 0; i < looseEndsList.size(); i++) {
@@ -637,8 +633,7 @@ Mat Util::closeLooseEndGaps(const Mat& img, const std::vector<Point>& looseEndsL
 	return finalImg;
 }
 
-/* Use convolution to get points that are loose ends.
-	This method expects a thinned/skeletonized image as input */
+/* Use convolution to get points that are loose ends. This method expects a thinned/skeletonized image as input */
 std::vector<Point> Util::getLooseEndPoints(Mat& img)
 {
 	// Adapted from: https://stackoverflow.com/a/72502985
