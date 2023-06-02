@@ -3,7 +3,7 @@
 
 
 void Segment::segment(const Mat& src, const int imageIndex,
-	std::vector<std::vector<Point>>& allLineContours,			// return line contours
+	std::vector<std::vector<Point>>& allLineContours,		// return line contours
 	std::vector<std::pair<Point, Point>>& allArrowEndpoints,	// return arrow tip and shaft end-points
 	std::vector<std::vector<Point>>& quadrilateralsContours,
 	const std::vector<Rect>& arrowROIs,
@@ -21,7 +21,7 @@ void Segment::segment(const Mat& src, const int imageIndex,
 	if (!starROIS.empty()) {
 		for (const auto& rect : starROIS)
 		{
-			Mat roiMat = bin(rect); // extract the ROI as a separate matrix
+			Mat roiMat = bin(rect);		// extract the ROI as a separate matrix
 			roiMat.setTo(0);		// set all pixel values within the ROI to 0 (black)
 
 		}
@@ -44,7 +44,7 @@ void Segment::segment(const Mat& src, const int imageIndex,
 	Mat removeTextImg = Mat::zeros(cont.size(), CV_8UC1);
 	fillQuads(cont, removeTextImg, filledShapes, arrowROIs);
 
-	Mat cleanOrig = removeTextImg.clone();	    // non-filled image without text
+	Mat cleanOrig = removeTextImg.clone();	    	// non-filled image without text
 	Mat filledThinned = filledShapes;	        // filled shapes
 
 	// Perform watershed
@@ -84,7 +84,7 @@ Mat Segment::preprocessLineImage(const std::vector<Rect>& arrowROIs,
 		for (const auto& rect : arrowROIs)
 		{
 			Mat roiMat = linesImage(rect); 	// extract the ROI as a separate matrix
-			roiMat.setTo(0); 					// set all pixel values within the ROI to 0 (black)
+			roiMat.setTo(0); 		// set all pixel values within the ROI to 0 (black)
 
 		}
 	}
@@ -109,19 +109,19 @@ Mat Segment::preprocessLineImage(const std::vector<Rect>& arrowROIs,
 	std::vector<Point> looseEndPoints{};
 	int repeat = 3;
 	do {
-		Util::removeNoiseConnectedComp(linesImage, 80);					// remove small components
+		Util::removeNoiseConnectedComp(linesImage, 80);				// remove small components
 		Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
 		morphologyEx(linesImage, linesImage, MORPH_CLOSE, kernel);		// close small gaps before filling
 
 		std::vector<std::vector<Point>> contours;
 		contours.clear();
 		findContours(linesImage, contours, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
-		drawContours(linesImage, contours, -1, Color::white, FILLED);	// fill closed contours 
+		drawContours(linesImage, contours, -1, Color::white, FILLED);		// fill closed contours 
 		Mat openingMask;
 		morphologyEx(linesImage, openingMask, MORPH_OPEN, kernel);		// create a mask of filled contours 
-		dilate(openingMask, openingMask, kernel);						// dilate
-		bitwise_and(linesImage, ~openingMask, linesImage);				// remove small filled contours
-		Util::removeNoiseConnectedComp(linesImage, 80);					// remove small components
+		dilate(openingMask, openingMask, kernel);				// dilate
+		bitwise_and(linesImage, ~openingMask, linesImage);			// remove small filled contours
+		Util::removeNoiseConnectedComp(linesImage, 80);				// remove small components
 		thinning(linesImage, linesImage);
 		looseEndPoints.clear();
 		looseEndPoints = Util::getLooseEndPoints(linesImage);
@@ -189,7 +189,7 @@ std::vector<std::pair<Point, Point>> Segment::getAllArrowEndPoints(const Mat& is
 			corners[2] = Point(arrowRoi.x + arrowRoi.width, arrowRoi.y + arrowRoi.height);
 			corners[3] = Point(arrowRoi.x, arrowRoi.y + arrowRoi.height);
 
-			Mat individualArrow = //Mat(arrow_image, arrow);
+			Mat individualArrow = 
 				Util::fillBlackOutsideOfContours(arrowImage, corners);
 
 			// get the points representing the TIP and ENDPOINT of the arrow
@@ -226,6 +226,7 @@ std::pair<Point, Point> Segment::getArrowEndpoints(Mat& individualArrow)
 	// Get all points of interest - SHAFT
 	Mat isolatedShaft;
 	bitwise_and(~isolatedArrowHead, individualArrow, isolatedShaft);
+	
 	// Close small gaps
 	dilate(isolatedShaft, isolatedShaft, kernel);
 	// remove small noise from shaft image
@@ -568,7 +569,6 @@ Mat Segment::getWatershedMarkers(const Mat& filledThinned)
 	Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
 	Mat threshDist = filledThinned.clone();
 	dilate(threshDist, threshDist, kernel, Point(-1, -1), 2);
-
 
 	// Get sure background by dilating
 	Mat sureBg;
