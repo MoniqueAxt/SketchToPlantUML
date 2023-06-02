@@ -29,9 +29,9 @@ void Transform::transform(const Mat& src, const int i, const association_set& as
 		std::string rect1Hash = generateShortHash(rect1);
 		std::string rect2Hash = generateShortHash(rect2);
 		// Pair classes that are associated
-		ss << "Class_" << rect1Hash /*rect1.size()*/
+		ss << "Class_" << rect1Hash
 			<< associationSymbol
-			<< "Class_" << rect2Hash /*rect2.size()*/
+			<< "Class_" << rect2Hash
 			<< "\n";
 
 		/*Util::drawRelationship(
@@ -45,7 +45,7 @@ void Transform::transform(const Mat& src, const int i, const association_set& as
 	for (const auto& trio : baseInheritedRelationships)
 	{
 		std::string relationsSymbol = " <|-- ";
-		auto& [parentClass, connectingArrow, children] = trio;		// get the elements in this relationship
+		auto& [parentClass, connectingArrow, children] = trio;		// get the elements in this relationship from the tuple
 
 		std::string parentHash = generateShortHash(parentClass);
 		// Pair each child with the parent
@@ -53,9 +53,9 @@ void Transform::transform(const Mat& src, const int i, const association_set& as
 		{
 			std::string childHash = generateShortHash(child);
 
-			ss << "Class_" << parentHash /*parentClass.size() */
+			ss << "Class_" << parentHash
 				<< relationsSymbol
-				<< "Class_" << childHash /*child.size()*/
+				<< "Class_" << childHash
 				<< "\n";
 
 			/*Util::drawRelationship(
