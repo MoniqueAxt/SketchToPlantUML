@@ -59,7 +59,7 @@ int main()
 		// #####################################################################
 		// Detect text regions
 		// #####################################################################
-		Mat resized;					// input for the EAST model
+		Mat resized;				// input for the EAST model
 		Mat srcCopy = src.clone();		// to get the adjusted ROIs based on the original image's size
 		resized = Util::resizeImage32(srcCopy);
 		std::vector<std::vector<Point>> textDetections = TextDetection::detectTextWithEAST(srcCopy, resized);
@@ -103,17 +103,16 @@ int main()
 		// const std::vector<Rect> starRoisLoaded = Util::loadRectangles("resources/templateMatch/" + std::to_string(i) + ". star_rois.yml");
 
 
-
 		// #####################################################################
 		// Segment and Classify
 		// #####################################################################
 		std::vector<std::vector<Point>> allLineContours;		// line contours
-		std::vector<std::pair<Point, Point>> allArrowEndpoints;	// arrow tip and shaft end-points
-		std::vector<std::vector<Point>> quadrilateralsContours;// quadrilateral contours
+		std::vector<std::pair<Point, Point>> allArrowEndpoints;		// arrow tip and shaft end-points
+		std::vector<std::vector<Point>> quadrilateralsContours;		// quadrilateral contours
 
 		Segment::segment(src, i,
-			allLineContours,			// return all lines
-			allArrowEndpoints,			// return all aroww endpoints
+			allLineContours,		// return all lines
+			allArrowEndpoints,		// return all aroww endpoints
 			quadrilateralsContours,		// return all quads
 			arrowROIs,
 			starROIs,
@@ -126,8 +125,8 @@ int main()
 		Classify::classify(src, allLineContours,
 			quadrilateralsContours,
 			allArrowEndpoints,
-			associationRelationships,
-			baseInheritedRelationships // return baseInherited relationships
+			associationRelationships,	// return association relationships
+			baseInheritedRelationships	// return inheritance relationships
 		);
 
 
