@@ -32,7 +32,7 @@ struct AssociationTupleComparator {
 			return false;
 		}		
 
-		// The same quads are can be paired multiple times, but with different lines
+		// The same quads can be paired multiple times, but with different lines
 		if ((quad1 == quad3 && quad2 == quad4) || (quad1 == quad4 && quad2 == quad3))
 		{
 			// A duplicate, do not insert
