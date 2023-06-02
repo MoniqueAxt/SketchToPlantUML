@@ -674,7 +674,7 @@ void Segment::removeArrows(const Mat& image, const std::vector<Rect>& arrowROIs)
 	for (const auto& rect : arrowROIs)
 	{
 		Mat roiMat = image(rect); 	// extract the ROI 
-		roiMat.setTo(0); 			// set all pixel values within the ROI to 0 (black)
+		roiMat.setTo(0); 		// set all pixel values within the ROI to 0 (black)
 	}
 
 }
