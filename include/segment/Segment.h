@@ -16,7 +16,7 @@ class Segment
 {
 public:
 	static void segment(const Mat& src, int imageIndex,
-		std::vector<std::vector<Point>>& allLineContours,			// return line contours
+		std::vector<std::vector<Point>>& allLineContours,		// return line contours
 		std::vector<std::pair<Point, Point>>& allArrowEndpoints,	// return arrow tip and shaft end-points
 		std::vector<std::vector<Point>>& quadrilateralsContours,	// return quadrilaterals
 		const std::vector<Rect>& arrowROIs,
