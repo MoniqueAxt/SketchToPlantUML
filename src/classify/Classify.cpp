@@ -47,9 +47,9 @@ void Classify::classify(
 					double distance = norm(shaftPoint - linePoint); // Calculate Euclidean distance
 					if (distance < minDist) minDist = distance;
 
-					if (distance <= 50)							// If the line is close to the shaft endpoint
+					if (distance <= 50)				// If the line is close to the shaft endpoint
 					{
-						arrowPairedWithLine = true;				// The classes connected to this arrow/line are children
+						arrowPairedWithLine = true;		// The classes connected to this arrow/line are children
 						break;
 					}
 				}
@@ -70,9 +70,9 @@ void Classify::classify(
 					for (auto& pt : lineLooseEnds)
 					{
 						double distance = norm(shaftPoint - pt);	// Calculate Euclidean distance
-						if (distance <= 15)						// If the line loose end is the shaft point...
+						if (distance <= 15)				// If the line loose end is the shaft point...
 						{
-							continue;							// ...ignore it
+							continue;				// ...ignore it
 						}
 
 						// Point must be relatively near a class to be paired
@@ -142,11 +142,11 @@ std::optional<std::tuple<quad_class, connecting_line, quad_class>> Classify::cre
 	const auto idx1 = getClosestQuad(quads, line.first, threshold);
 	const auto idx2 = getClosestQuad(quads, line.second, threshold);
 
-	if (idx1 == std::nullopt || idx2 == std::nullopt)	// This line is likely noise
-		return std::nullopt;							// Ignore this line
+	if (idx1 == std::nullopt || idx2 == std::nullopt)	// This line is likely noise so ..
+		return std::nullopt;				// .. ignore this line
 
-	auto& class1 = quads[idx1.value()];					// Get the closest class to line.first
-	auto& class2 = quads[idx2.value()];					// Get the closest class to line.second
+	auto& class1 = quads[idx1.value()];			// Get the closest class to line.first
+	auto& class2 = quads[idx2.value()];			// Get the closest class to line.second
 
 	return std::make_tuple(class1, line, class2);		// Create association relationship
 }
